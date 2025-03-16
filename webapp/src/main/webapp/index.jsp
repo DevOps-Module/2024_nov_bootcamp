@@ -10,7 +10,7 @@
     <div class="container">
         <h1>Welcome to the MobannTech Greeting App</h1>
         <h2> If you see this, you have successfully released a simple greeting App. Congratulations & keep practicing </h2>
-        <label for="name">Enter your name:</label>
+        <label for="name">Please enter your name:</label>
         <input type="text" id="name" placeholder="Your Name">
         <button onclick="displayGreeting()">Show Greeting</button>
         <p id="greeting"></p>
