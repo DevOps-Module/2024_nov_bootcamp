@@ -1,0 +1,6 @@
+projectKey=project_chandana
+serverUrl=http://3.11.237.185:9000
+serverVersion=9.4.0.54424
+dashboardUrl=http://3.11.237.185:9000/dashboard?id=project_chandana
+ceTaskId=AZXEqsJ16YkRaa-lBwlg
+ceTaskUrl=http://3.11.237.185:9000/api/ce/task?id=AZXEqsJ16YkRaa-lBwlg

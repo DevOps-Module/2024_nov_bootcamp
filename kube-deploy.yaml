@@ -1,0 +1,41 @@
+---
+#Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emma-app
+  labels:
+    app: emma-app
+spec:
+ replicas: 4
+ selector:
+   matchLabels:
+     app: emma-app
+ template:
+   metadata:
+     labels:
+       app: emma-app
+   spec:
+     containers:
+     - name: class-con
+       image: mobanntechnologies/nov24:120425_1447
+       ports:
+       - containerPort: 8080
+
+
+---
+#Service Type nodePort
+apiVersion: v1
+kind: Service
+metadata:
+  name: emma-app
+  labels:
+    app: emma-app
+spec:
+  selector:
+    app: emma-app
+  type: NodePort
+  ports:
+  - nodePort: 30001
+    port: 8080
+    targetPort: 8080

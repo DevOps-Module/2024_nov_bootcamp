@@ -1,0 +1,63 @@
+#Create Custom Container Image, and Push it to DockerHub Registry
+---
+- hosts: localhost
+  tasks: 
+  - name: Pull .war artifact from Artifactory
+    become: true
+    get_url:
+      url: http://3.11.237.185:8082/artifactory/nov24_set-libs-release-local/com/mobanntechnologies/mobanntechnologies/1.0-RELEASE/mobanntechnologies-1.0-RELEASE.war
+      dest: /home/ubuntu
+      url_username: admin
+      url_password: Computer1!
+
+  - name: Rename .war Artifact
+    command: mv -f mobanntechnologies-1.0-RELEASE.war webapp.war
+  
+  - name: make sure python docker library is there for the docker_image module execution
+    ansible.builtin.pip:
+      name: docker
+      
+  - name: install docker engine
+    apt:
+      pkg:
+      - docker
+      - docker.io
+    become: yes
+
+  - name: Pull Tomcat  Container Image
+    docker_image:
+      name: !unsafe tomcat:latest
+      source: pull
+      force_tag: yes
+
+  - name: Build image and with build args
+    docker_image:
+      name: mobanntechnologies/nov24
+      repository: mobanntechnologies/nov24:{{build_number}}
+      build:
+        path: /home/ubuntu
+        args:
+          listen_port: 8080
+      source: build
+      force_source: yes
+  
+  
+  - name: Log into DockerHub
+    docker_login:
+     username: mobanntechnologies
+     password: Consultant2023!
+ 
+
+  - name: Push to docker hub
+    docker_image:
+        name: mobanntechnologies/nov24
+        repository: mobanntechnologies/nov24:{{build_number}}
+        force_tag: yes
+        push: yes
+        source: local
+    
+
+
+
+
+
